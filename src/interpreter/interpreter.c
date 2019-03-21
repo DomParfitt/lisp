@@ -41,6 +41,12 @@ type_struct eval(tree* tree) {
       env.binding = (char*)left.value;
       env.value = right;
       return new_type_struct(right.type, right.value);
+    case IF:
+      if (truthy(left)) {
+        return new_type_struct(right.type, right.value);
+      } else {
+        return eval(tree->third);
+      }
     default:
       return new_type_struct(ERR, -1);
   }

@@ -10,6 +10,7 @@ typedef struct tree {
   token t;
   struct tree* left;
   struct tree* right;
+  struct tree* third;
 } tree;
 
 tree* create_tree(token t);

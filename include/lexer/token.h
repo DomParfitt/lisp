@@ -12,6 +12,7 @@ typedef enum token_kind {
   DIV,
   NUM,
   DEF,
+  IF,
   IDENT,
   END
 } token_kind;

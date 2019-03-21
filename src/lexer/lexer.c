@@ -113,6 +113,11 @@ token* keyword(char* str, size_t size) {
   if (size == 3 && strncmp(str, "def", size) == 0) {
     return &(token){DEF, str, line, col++};
   }
+
+  if (size == 2 && strncmp(str, "if", size) == 0) {
+    return &(token){IF, str, line, col++};
+  }
+
   return NULL;
 }
 

@@ -11,6 +11,7 @@ tree* expr(token_array* tokens);
 tree* expr_val(token_array* tokens);
 tree* operation(token_array* tokens);
 tree* bind(token_array* tokens);
+tree* if_expr(token_array* tokens);
 tree* op(token_array* tokens);
 tree* value(token_array* tokens);
 tree* identifer(token_array* tokens);
@@ -78,6 +79,11 @@ tree* expr(token_array* tokens) {
     return t;
   }
 
+  t = if_expr(tokens);
+  if (t != NULL) {
+    return t;
+  }
+
   t = exprs(tokens);
 
   return t;
@@ -110,17 +116,44 @@ tree* bind(token_array* tokens) {
   tree* t = create_tree(current(tokens));
 
   tree* left = identifer(tokens);
-  if (t == NULL) {
+  if (left == NULL) {
     return NULL;
   }
 
   tree* right = exprs(tokens);
-  if (t == NULL) {
+  if (right == NULL) {
     return NULL;
   }
 
   t->left = left;
   t->right = right;
+  return t;
+}
+
+tree* if_expr(token_array* tokens) {
+  token token = peek(tokens);
+  if (token.kind != IF) {
+    return NULL;
+  }
+  tree* t = create_tree(current(tokens));
+
+  tree* left = exprs(tokens);
+  if (left == NULL) {
+    return NULL;
+  }
+
+  tree* right = exprs(tokens);
+  if (right == NULL) {
+    return NULL;
+  }
+
+  tree* third = exprs(tokens);
+  if (third == NULL) {
+    return NULL;
+  }
+  t->left = left;
+  t->right = right;
+  t->third = third;
   return t;
 }
 

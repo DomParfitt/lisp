@@ -7,6 +7,7 @@ tree* create_tree(token tok) {
   t->t = tok;
   t->left = NULL;
   t->right = NULL;
+  t->third = NULL;
   return t;
 }
 
@@ -24,6 +25,11 @@ void delete_tree(tree* tree) {
   if (tree->right != NULL) {
     delete_tree(tree->right);
     tree->right = NULL;
+  }
+
+  if (tree->third != NULL) {
+    delete_tree(tree->third);
+    tree->third = NULL;
   }
 
   delete_tree(tree);
@@ -45,6 +51,13 @@ char* str_tree(tree* tree) {
     strcat(str, right);
     free(right);
   }
+
+  if (tree->third != NULL) {
+    char* third = str_tree(tree->right);
+    strcat(str, third);
+    free(third);
+  }
+
   strcat(str, ")");
   return str;
 }

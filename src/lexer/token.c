@@ -20,6 +20,8 @@ char* str_token_kind(token_kind kind) {
       return "NUM";
     case DEF:
       return "DEF";
+    case IF:
+      return "IF";
     case IDENT:
       return "IDENT";
     case END:
