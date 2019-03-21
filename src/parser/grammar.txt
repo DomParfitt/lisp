@@ -1,0 +1,10 @@
+program ::= expr_lst
+expr_lst ::= exprs | exprs expr_lst
+exprs ::= '(' expr ')'
+expr ::= value | operation | bind | exprs
+operation ::= op expr expr
+bind ::= 'def' id expr
+fn_call ::= id exprs
+op ::= '+' | '-' | '*' | '/'
+value ::= [0-9]+
+id ::= [a-zA-Z]+  
