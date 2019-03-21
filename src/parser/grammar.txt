@@ -1,7 +1,7 @@
 program ::= expr_lst
 expr_lst ::= exprs | exprs expr_lst
 exprs ::= '(' expr ')' | value
-expr ::= value | operation | bind | exprs
+expr ::= value | operation | bind | if_expr |exprs
 operation ::= op expr expr
 bind ::= 'def' id exprs
 if_expr ::= 'if' exprs exprs exprs
