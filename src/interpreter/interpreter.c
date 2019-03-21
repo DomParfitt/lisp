@@ -1,7 +1,10 @@
+#include <stdbool.h>
 #include "interpreter/env.h"
 #include "interpreter/type.h"
 #include "lexer/token.h"
 #include "parser/tree.h"
+
+bool truthy(type_struct t);
 
 environ env;
 
@@ -40,5 +43,16 @@ type_struct eval(tree* tree) {
       return new_type_struct(right.type, right.value);
     default:
       return new_type_struct(ERR, -1);
+  }
+}
+
+bool truthy(type_struct t) {
+  switch (t.type) {
+    case BOOL:
+      return (bool)t.value;
+    case INT:
+      return (int)t.value != 0;
+    default:
+      return false;
   }
 }
