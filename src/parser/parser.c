@@ -47,7 +47,7 @@ parse_result parse(token_array tokens) {
 
 tree* exprs(token_array* tokens) {
   if (!expect(tokens, OPEN_PAREN)) {
-    return NULL;
+    return value(tokens);
   }
 
   tree* t = expr(tokens);
@@ -114,7 +114,7 @@ tree* bind(token_array* tokens) {
     return NULL;
   }
 
-  tree* right = expr(tokens);
+  tree* right = exprs(tokens);
   if (t == NULL) {
     return NULL;
   }
