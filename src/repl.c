@@ -31,16 +31,16 @@ int repl() {
       type_struct result = eval(parse_res.trees[0]);
       switch (result.type) {
         case BOOL:
-          printf(result.value ? "true\n" : "false\n");
+          printf(result.value.b ? "true\n" : "false\n");
           break;
         case INT:
-          printf("%d\n", (int)result.value);
+          printf("%d\n", result.value.i);
           break;
         case STR:
-          printf("%s\n", (char*)result.value);
+          printf("%s\n", result.value.str);
           break;
         default:
-          printf("%d\n", (int)result.value);
+          printf("%d\n", result.value.i);
           break;
       }
     } else {

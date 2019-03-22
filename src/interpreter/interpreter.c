@@ -30,20 +30,20 @@ type_struct eval(tree* tree) {
 
   switch (tree->t.kind) {
     case PLUS:
-      return new_type_struct(INT, (int)left.value + (int)right.value);
+      return new_type_struct(INT, left.value.i + right.value.i);
     case MINUS:
-      return new_type_struct(INT, (int)left.value - (int)right.value);
+      return new_type_struct(INT, left.value.i - right.value.i);
     case MULT:
-      return new_type_struct(INT, (int)left.value * (int)right.value);
+      return new_type_struct(INT, left.value.i * right.value.i);
     case DIV:
-      return new_type_struct(INT, (int)left.value / (int)right.value);
+      return new_type_struct(INT, left.value.i / right.value.i);
     case DEF:
-      env.binding = (char*)left.value;
+      env.binding = left.value.str;
       env.value = right;
-      return new_type_struct(right.type, right.value);
+      return right;
     case IF:
       if (truthy(left)) {
-        return new_type_struct(right.type, right.value);
+        return right;
       } else {
         return eval(tree->third);
       }
@@ -55,9 +55,9 @@ type_struct eval(tree* tree) {
 bool truthy(type_struct t) {
   switch (t.type) {
     case BOOL:
-      return (bool)t.value;
+      return t.value.b;
     case INT:
-      return (int)t.value != 0;
+      return t.value.i != 0;
     default:
       return false;
   }
