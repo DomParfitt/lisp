@@ -7,7 +7,7 @@
 bool whitespace(char c);
 bool digit(char c);
 bool alpha(char c);
-token* keyword(char* str, size_t size);
+token* keyword(char* str);
 token identifier(char* str, size_t* idx);
 token num(char* str, size_t* idx);
 char* substr(char* str, size_t from, size_t len);
@@ -102,19 +102,19 @@ token identifier(char* str, size_t* idx) {
   char* ident = substr(str, start, len);
 
   token* key;
-  if ((key = keyword(ident, len)) != NULL) {
+  if ((key = keyword(ident)) != NULL) {
     return *key;
   }
 
   return (token){IDENT, ident, line, col++};
 }
 
-token* keyword(char* str, size_t size) {
-  if (size == 3 && strncmp(str, "def", size) == 0) {
+token* keyword(char* str) {
+  if (strcmp(str, "def") == 0) {
     return &(token){DEF, str, line, col++};
   }
 
-  if (size == 2 && strncmp(str, "if", size) == 0) {
+  if (strcmp(str, "if") == 0) {
     return &(token){IF, str, line, col++};
   }
 
