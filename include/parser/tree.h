@@ -15,6 +15,6 @@ typedef struct tree {
 
 tree* create_tree(token t);
 void delete_tree(tree* tree);
-char* str_tree(tree* tree);
+void print_tree(tree* tree);
 
 #endif

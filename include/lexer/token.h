@@ -31,8 +31,7 @@ typedef struct token_array {
   token* tokens;
 } token_array;
 
-char* str_token(token token);
-
+void print_token(token token);
 void delete_token_array(token_array array);
 
 #endif

@@ -31,11 +31,9 @@ char* str_token_kind(token_kind kind) {
   }
 };
 
-char* str_token(token token) {
-  char* str = malloc(sizeof(char) * 64);
-  sprintf(str, "[%s: '%s' @ (%d, %d)]", str_token_kind(token.kind),
-          token.literal, token.line, token.col);
-  return str;
+void print_token(token token) {
+  printf("[%s: '%s' @ (%d, %d)]\n", str_token_kind(token.kind), token.literal,
+         token.line, token.col);
 }
 
 void delete_token_array(token_array array) {

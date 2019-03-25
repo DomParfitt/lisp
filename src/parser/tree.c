@@ -1,6 +1,6 @@
 #include "parser/tree.h"
+#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 tree* create_tree(token tok) {
   tree* t = malloc(sizeof(tree));
@@ -12,7 +12,7 @@ tree* create_tree(token tok) {
 }
 
 void delete_tree(tree* tree) {
-  if (tree->left == NULL && tree->right == NULL) {
+  if (tree->left == NULL && tree->right == NULL && tree->third == NULL) {
     free(tree);
     return;
   }
@@ -35,29 +35,20 @@ void delete_tree(tree* tree) {
   delete_tree(tree);
 }
 
-char* str_tree(tree* tree) {
-  char* str = malloc(sizeof(char) * 64);
-  strcat(str, "(");
-  strcat(str, tree->t.literal);
+void print_tree(tree* tree) {
+  printf("(%s", tree->t.literal);
 
   if (tree->left != NULL) {
-    char* left = str_tree(tree->left);
-    strcat(str, left);
-    free(left);
+    print_tree(tree->left);
   }
 
   if (tree->right != NULL) {
-    char* right = str_tree(tree->right);
-    strcat(str, right);
-    free(right);
+    print_tree(tree->right);
   }
 
   if (tree->third != NULL) {
-    char* third = str_tree(tree->right);
-    strcat(str, third);
-    free(third);
+    print_tree(tree->third);
   }
 
-  strcat(str, ")");
-  return str;
+  printf(")");
 }
