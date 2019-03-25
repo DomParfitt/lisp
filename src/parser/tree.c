@@ -35,20 +35,25 @@ void delete_tree(tree* tree) {
   delete_tree(tree);
 }
 
-void print_tree(tree* tree) {
+void print_tree(tree* tree) { print_tree_helper(tree, 0); }
+
+void print_tree_helper(tree* tree, size_t depth) {
   printf("(%s", tree->t.literal);
 
   if (tree->left != NULL) {
-    print_tree(tree->left);
+    print_tree_helper(tree->left, depth + 1);
   }
 
   if (tree->right != NULL) {
-    print_tree(tree->right);
+    print_tree_helper(tree->right, depth + 1);
   }
 
   if (tree->third != NULL) {
-    print_tree(tree->third);
+    print_tree_helper(tree->third, depth + 1);
   }
 
   printf(")");
+  if (depth == 0) {
+    printf("\n");
+  }
 }
