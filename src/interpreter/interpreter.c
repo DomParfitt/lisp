@@ -6,13 +6,27 @@
 
 bool truthy(type_struct t);
 
+bool first = true;
 environ env;
 
-type_struct eval(tree* tree) {
-  env = (environ){malloc(sizeof(char) * 256), 0};
+void init() {
+  env = (environ){create_map(10)};
+  first = false;
+}
 
+type_struct eval(tree* tree) {
+  if (first) {
+    init();
+  }
+
+  // TODO: This needs to diff between writing to and reading from an identifier
   if (tree->t.kind == IDENT) {
-    return new_type_struct(STR, tree->t.literal);
+    type_struct* val = get(env.map, tree->t.literal);
+    if (val == NULL) {
+      return new_type_struct(STR, tree->t.literal);
+    } else {
+      return *val;
+    }
   }
 
   if (tree->t.kind == NUM) {
@@ -38,8 +52,7 @@ type_struct eval(tree* tree) {
     case DIV:
       return new_type_struct(INT, left.value.i / right.value.i);
     case DEF:
-      env.binding = left.value.str;
-      env.value = right;
+      put(env.map, left.value.str, &right);
       return right;
     case IF:
       if (truthy(left)) {
