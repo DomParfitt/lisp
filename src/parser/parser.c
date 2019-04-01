@@ -171,9 +171,8 @@ tree* value(token_array* tokens) {
   token token = peek(tokens);
   if (token.kind == NUM) {
     return create_tree(current(tokens));
-  } else {
-    return NULL;
   }
+  return identifer(tokens);
 }
 
 tree* identifer(token_array* tokens) {
