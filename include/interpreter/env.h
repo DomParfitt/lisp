@@ -1,11 +1,11 @@
 #ifndef ENV_H
 #define ENV_H
 
+#include "map.h"
 #include "type.h"
 
 typedef struct environ {
-  char* binding;
-  type_struct value;
+  map* map;
 } environ;
 
 #endif
