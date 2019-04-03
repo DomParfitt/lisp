@@ -16,6 +16,7 @@ typedef struct type_struct {
   type_val value;
 } type_struct;
 
-type_struct new_type_struct(type type, void* value);
+type_struct* new_type_struct(type type, void* value);
+void print_type_struct(type_struct* t);
 
 #endif
