@@ -24,6 +24,8 @@ char* str_token_kind(token_kind kind) {
       return "IF";
     case IDENT:
       return "IDENT";
+    case STRING:
+      return "STRING";
     case END:
       return "END";
     default:
