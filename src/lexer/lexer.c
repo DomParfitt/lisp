@@ -7,9 +7,11 @@
 bool whitespace(char c);
 bool digit(char c);
 bool alpha(char c);
+bool quote(char c);
 token* keyword(char* str);
 token identifier(char* str, size_t* idx);
 token num(char* str, size_t* idx);
+token strng(char* str, size_t* idx);
 char* substr(char* str, size_t from, size_t len);
 
 int line = 0;
@@ -33,6 +35,11 @@ token_array lex(char* str) {
 
     if (alpha(str[i])) {
       tokens[count++] = identifier(str, &i);
+      continue;
+    }
+
+    if (quote(str[i])) {
+      tokens[count++] = strng(str, &i);
       continue;
     }
 
@@ -109,6 +116,16 @@ token identifier(char* str, size_t* idx) {
   return (token){IDENT, ident, line, col++};
 }
 
+token strng(char* str, size_t* idx) {
+  size_t start = ++(*idx);
+  while (!quote(str[*idx])) {
+    (*idx)++;
+  }
+  size_t len = ((*idx)--) - start;
+  (*idx)++;
+  return (token){STRING, substr(str, start, len), line, col++};
+}
+
 token* keyword(char* str) {
   if (strcmp(str, "def") == 0) {
     return &(token){DEF, str, line, col++};
@@ -124,6 +141,8 @@ token* keyword(char* str) {
 bool digit(char c) { return c >= 48 && c <= 57; }
 
 bool alpha(char c) { return (c >= 65 && c <= 90) || (c >= 97 && c <= 122); }
+
+bool quote(char c) { return c == 34; }
 
 char* substr(char* str, size_t from, size_t len) {
   char* c = malloc(sizeof(char) * len);
