@@ -175,7 +175,7 @@ tree* op(token_array* tokens) {
 
 tree* value(token_array* tokens) {
   token token = peek(tokens);
-  if (token.kind == NUM) {
+  if (token.kind == NUM || token.kind == STRING) {
     return create_tree(current(tokens));
   }
   return NULL;
