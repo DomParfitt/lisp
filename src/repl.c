@@ -9,6 +9,7 @@
 #include "parser/tree.h"
 
 const char* PROMPT = "> ";
+const char* EXIT = "exit";
 const size_t INPUT_SIZE = 256;
 
 int repl() {
@@ -19,39 +20,47 @@ int repl() {
     printf("%s", PROMPT);
     fgets(input, INPUT_SIZE, stdin);
 
-    if (strncmp(input, "exit", 4) == 0) {
+    if (strcmp(input, EXIT) == 0) {
       printf("Exiting...");
       break;
     }
 
     printf("%s", PROMPT);
     array = lex(input);
+    // for (size_t i = 0; i < array.size; i++) {
+    //   print_token(array.tokens[i]);
+    // }
     parse_res = parse(array);
     if (parse_res.success) {
-      type_struct result = eval(parse_res.trees[0]);
-      switch (result.type) {
+      type_struct* result = eval(parse_res.trees[0]);
+      switch (result->type) {
         case BOOL:
-          printf(result.value.b ? "true\n" : "false\n");
+          printf(result->value.b ? "true\n" : "false\n");
           break;
         case INT:
-          printf("%d\n", result.value.i);
+          printf("(int) %d\n", result->value.i);
           break;
         case STR:
-          printf("%s\n", result.value.str);
+          printf("(str) %s\n", result->value.str);
           break;
         default:
-          printf("%d\n", result.value.i);
+          printf("(unknown) %d\n", result->value.i);
           break;
       }
     } else {
       printf("%s\n", parse_res.error);
     }
+    // break;
   }
 
   free(input);
   delete_token_array(array);
   for (size_t i = 0; i < parse_res.size; i++) {
-    delete_tree(parse_res.trees[i]);
+    tree* t = parse_res.trees[i];
+    print_tree(t);
+    if (t != NULL) {
+      delete_tree(t);
+    }
   }
   return 0;
 }
