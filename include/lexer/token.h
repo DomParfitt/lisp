@@ -14,6 +14,7 @@ typedef enum token_kind {
   DEF,
   IF,
   IDENT,
+  STRING,
   END
 } token_kind;
 
