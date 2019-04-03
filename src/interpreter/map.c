@@ -25,7 +25,6 @@ void delete_map(map* map) {
 }
 
 void put(map* map, char* key, type_struct* value) {
-  print_type_struct(&value);
   for (size_t i = 0; i < map->count; i++) {
     map_entry* entry = map->entries[i];
     if (strcmp(key, entry->key) == 0) {
@@ -48,7 +47,7 @@ type_struct* get(map* map, char* key) {
 
 void print_map(map* map) {
   printf("Map address %p\n", &map);
-  printf("Map has %d entries\n", map->count);
+  printf("Map has %lu entries\n", map->count);
   for (size_t i = 0; i < map->count; i++) {
     map_entry* entry = map->entries[i];
     printf("Entry #%lu\n", i);

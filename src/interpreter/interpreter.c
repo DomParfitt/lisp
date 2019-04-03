@@ -30,7 +30,6 @@ type_struct* eval(tree* tree) {
     if (val == NULL) {
       return new_type_struct(STR, tree->t.literal);
     } else {
-      print_type_struct(val);
       return val;
     }
   }
