@@ -38,6 +38,10 @@ type_struct* eval(tree* tree) {
     return new_type_struct(INT, strtoll(tree->t.literal, NULL, 10));
   }
 
+  if (tree->t.kind == STRING) {
+    return new_type_struct(STR, tree->t.literal);
+  }
+
   type_struct *left, *right;
   if (tree->left != NULL) {
     left = eval(tree->left);
