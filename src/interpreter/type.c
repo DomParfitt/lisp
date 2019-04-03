@@ -34,7 +34,7 @@ void print_type_struct(type_struct* t) {
       printf("%d (int)\n", t->value.i);
       break;
     case STR:
-      printf("%s (str)\n", t->value.str);
+      printf("\"%s\" (str)\n", t->value.str);
       break;
     default:
       printf("%d (unknown)\n", t->value.i);
