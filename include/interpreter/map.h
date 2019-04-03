@@ -19,5 +19,6 @@ map* create_map(size_t size);
 void delete_map(map* map);
 void put(map* map, char* key, type_struct* value);
 type_struct* get(map* map, char* key);
+void print_map(map* map);
 
 #endif
