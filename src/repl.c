@@ -16,6 +16,7 @@ int repl() {
   token_array array;
   parse_result parse_res;
   char* input = malloc(sizeof(char) * INPUT_SIZE);
+  init();
   while (true) {
     printf("%s", PROMPT);
     fgets(input, INPUT_SIZE, stdin);
@@ -39,6 +40,7 @@ int repl() {
     }
     // break;
   }
+  close();
 
   free(input);
   delete_token_array(array);

@@ -7,19 +7,13 @@
 
 bool truthy(type_struct t);
 
-bool first = true;
 environ env;
 
-void init() {
-  env = (environ){create_map(10)};
-  first = false;
-}
+void init() { env = (environ){create_map(10)}; }
+
+void close() { delete_map(env.map); }
 
 type_struct* eval(tree* tree) {
-  if (first) {
-    init();
-  }
-
   // TODO: This needs to diff between writing to and reading from an identifier
   if (tree->t.kind == IDENT) {
     if (tree->kind == BIND) {
