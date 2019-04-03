@@ -33,20 +33,7 @@ int repl() {
     parse_res = parse(array);
     if (parse_res.success) {
       type_struct* result = eval(parse_res.trees[0]);
-      switch (result->type) {
-        case BOOL:
-          printf(result->value.b ? "true\n" : "false\n");
-          break;
-        case INT:
-          printf("(int) %d\n", result->value.i);
-          break;
-        case STR:
-          printf("(str) %s\n", result->value.str);
-          break;
-        default:
-          printf("(unknown) %d\n", result->value.i);
-          break;
-      }
+      print_type_struct(result);
     } else {
       printf("%s\n", parse_res.error);
     }
