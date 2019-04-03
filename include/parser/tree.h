@@ -3,10 +3,10 @@
 
 #include "lexer/token.h"
 
-typedef enum node_kind { OP, VALUE } node_kind;
+typedef enum node_kind { BIND, CALL } node_kind;
 
 typedef struct tree {
-  // node_kind kind;
+  node_kind kind;
   token t;
   struct tree* left;
   struct tree* right;
