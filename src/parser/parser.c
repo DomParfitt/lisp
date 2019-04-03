@@ -119,6 +119,7 @@ tree* bind(token_array* tokens) {
   if (left == NULL) {
     return NULL;
   }
+  left->kind = BIND;
 
   tree* right = exprs(tokens);
   if (right == NULL) {
