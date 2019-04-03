@@ -1,5 +1,7 @@
 
 #include "interpreter/type.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 type_struct* new_type_struct(type type, void* value) {
   type_val val;
@@ -21,21 +23,20 @@ type_struct* new_type_struct(type type, void* value) {
   ts->type = type;
   ts->value = val;
   return ts;
-  // return (type_struct){type, val};
 }
 
 void print_type_struct(type_struct* t) {
   switch (t->type) {
     case BOOL:
-      printf("BOOL: %s\n", t->value.b == 0 ? "false" : "true");
+      printf("%s (bool)\n", t->value.b == 0 ? "false" : "true");
       break;
     case INT:
-      printf("INT: %d\n", t->value.i);
+      printf("%d (int)\n", t->value.i);
       break;
     case STR:
-      printf("STR: %s\n", t->value.str);
+      printf("%s (str)\n", t->value.str);
       break;
     default:
-      printf("UNKNOWN: %d\n", t->value.i);
+      printf("%d (unknown)\n", t->value.i);
   }
 }
