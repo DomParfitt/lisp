@@ -11,6 +11,12 @@ map_entry* create_map_entry(char* key, type_struct* value) {
   return entry;
 }
 
+void delete_map_entry(map_entry* entry) {
+  free(entry->key);
+  free(entry->value);
+  free(entry);
+}
+
 map* create_map(size_t size) {
   map* map = malloc(sizeof(map));
   map->size = size;
@@ -20,6 +26,10 @@ map* create_map(size_t size) {
 }
 
 void delete_map(map* map) {
+  for (size_t i = 0; i < map->count; i++) {
+    map_entry* entry = map->entries[i];
+    delete_map_entry(entry);
+  }
   free(map->entries);
   free(map);
 }
