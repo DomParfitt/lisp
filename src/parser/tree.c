@@ -4,6 +4,7 @@
 
 tree* create_tree(token tok) {
   tree* t = malloc(sizeof(tree));
+  t->kind = CALL;
   t->t = tok;
   t->left = NULL;
   t->right = NULL;
