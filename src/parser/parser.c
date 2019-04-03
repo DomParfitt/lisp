@@ -74,6 +74,11 @@ tree* expr(token_array* tokens) {
     return t;
   }
 
+  t = identifer(tokens);
+  if (t != NULL) {
+    return t;
+  }
+
   t = bind(tokens);
   if (t != NULL) {
     return t;
@@ -173,7 +178,7 @@ tree* value(token_array* tokens) {
   if (token.kind == NUM) {
     return create_tree(current(tokens));
   }
-  return identifer(tokens);
+  return NULL;
 }
 
 tree* identifer(token_array* tokens) {
