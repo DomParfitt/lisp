@@ -24,7 +24,6 @@ void close() {
 
 type_struct* eval(tree* tree) {
   init();
-  // TODO: This needs to diff between writing to and reading from an identifier
   if (tree->t.kind == IDENT) {
     if (tree->kind == BIND) {
       return new_type_struct(STR, tree->t.literal);
