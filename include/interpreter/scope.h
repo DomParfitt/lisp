@@ -5,11 +5,12 @@
 #include "type.h"
 
 typedef struct scope {
-  scope* parent;
+  struct scope* parent;
   map* map;
 } scope;
 
-scope* new_scope(map* map);
+scope* new_scope(scope* parent);
 void delete_scope(scope* s);
+type_struct* lookup(scope* s, char* var);
 
 #endif
