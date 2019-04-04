@@ -70,9 +70,19 @@ token_array lex(char* str) {
         break;
       case '>':
         kind = GT;
+        if (str[i + 1] == '=') {
+          kind = GTE;
+          c = substr(str, i, 2);
+          i++;
+        }
         break;
       case '<':
         kind = LT;
+        if (str[i + 1] == '=') {
+          kind = LTE;
+          c = substr(str, i, 2);
+          i++;
+        }
         break;
       default:
         continue;

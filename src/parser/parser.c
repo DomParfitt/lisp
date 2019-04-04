@@ -173,6 +173,8 @@ tree* op(token_array* tokens) {
     case EQ:
     case GT:
     case LT:
+    case GTE:
+    case LTE:
       return create_tree(current(tokens));
     default:
       return NULL;
