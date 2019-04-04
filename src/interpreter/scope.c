@@ -7,7 +7,7 @@ scope* new_scope(scope* parent) {
   s->map = create_map(10);
 }
 
-delete_scope(scope* s) {
+void delete_scope(scope* s) {
   delete_map(s->map);
   free(s);
 }
