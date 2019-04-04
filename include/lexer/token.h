@@ -10,6 +10,7 @@ typedef enum token_kind {
   MINUS,
   MULT,
   DIV,
+  EQ,
   GT,
   LT,
   GTE,

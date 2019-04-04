@@ -170,6 +170,7 @@ tree* op(token_array* tokens) {
     case MINUS:
     case MULT:
     case DIV:
+    case EQ:
     case GT:
     case LT:
       return create_tree(current(tokens));
@@ -215,15 +216,3 @@ bool expect(token_array* tokens, token_kind kind) {
   current(tokens);
   return true;
 }
-
-// token* expect_t(token_array* tokens, token_kind kind) {
-//   token token = peek(tokens);
-//   if (token.kind != kind) {
-//     sprintf(err, "Unexpected '%s' at line: %d, col: %d", token.literal,
-//             token.line, token.col);
-//     return NULL;
-//   }
-
-//   token = current(tokens);
-//   return &token;
-// }
