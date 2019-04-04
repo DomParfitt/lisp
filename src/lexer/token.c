@@ -16,6 +16,14 @@ char* str_token_kind(token_kind kind) {
       return "MULT";
     case DIV:
       return "DIV";
+    case GT:
+      return "GT";
+    case LT:
+      return "LT";
+    case GTE:
+      return "GTE";
+    case LTE:
+      return "LTE";
     case NUM:
       return "NUM";
     case DEF:
