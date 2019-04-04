@@ -36,13 +36,17 @@ type_struct* eval(tree* tree) {
     return new_type_struct(STR, tree->t.literal);
   }
 
-  type_struct *left, *right;
+  type_struct *left, *right, *third;
   if (tree->left != NULL) {
     left = eval(tree->left);
   }
 
   if (tree->right != NULL) {
     right = eval(tree->right);
+  }
+
+  if (tree->third != NULL) {
+    third = eval(tree->third);
   }
 
   switch (tree->t.kind) {
@@ -61,7 +65,7 @@ type_struct* eval(tree* tree) {
       if (truthy(*left)) {
         return right;
       } else {
-        return eval(tree->third);
+        return third;
       }
     default:
       return new_type_struct(ERR, -1);
@@ -78,3 +82,5 @@ bool truthy(type_struct t) {
       return false;
   }
 }
+
+type_struct* error(char* msg) { return new_type_struct(ERR, msg); }
