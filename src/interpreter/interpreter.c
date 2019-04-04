@@ -12,8 +12,7 @@ scope* scp;
 
 void init() {
   if (!initialised) {
-    scp = malloc(sizeof(scope));
-    scp->map = create_map(10);
+    scp = new_scope(NULL);
     initialised = true;
   }
 }
@@ -22,8 +21,6 @@ void close() {
   delete_map(scp->map);
   // free(scp);
 }
-
-type_struct* evaluate(tree* tree, scope* parent) {}
 
 type_struct* eval(tree* tree) {
   init();
