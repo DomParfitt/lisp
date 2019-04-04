@@ -1,26 +1,39 @@
 #include <stdbool.h>
 #include <stdio.h>
-#include "interpreter/env.h"
+#include "interpreter/scope.h"
 #include "interpreter/type.h"
 #include "lexer/token.h"
 #include "parser/tree.h"
 
 bool truthy(type_struct t);
 
-environ env;
+bool initialised = false;
+scope* scp;
 
-void init() { env = (environ){create_map(10)}; }
+void init() {
+  if (!initialised) {
+    scp = malloc(sizeof(scope));
+    scp->map = create_map(10);
+    initialised = true;
+  }
+}
 
-void close() { delete_map(env.map); }
+void close() {
+  delete_map(scp->map);
+  // free(scp);
+}
+
+type_struct* evaluate(tree* tree, scope* parent) {}
 
 type_struct* eval(tree* tree) {
+  init();
   // TODO: This needs to diff between writing to and reading from an identifier
   if (tree->t.kind == IDENT) {
     if (tree->kind == BIND) {
       return new_type_struct(STR, tree->t.literal);
     }
 
-    type_struct* val = get(env.map, tree->t.literal);
+    type_struct* val = get(scp->map, tree->t.literal);
     if (val == NULL) {
       return new_type_struct(STR, tree->t.literal);
     } else {
@@ -59,7 +72,7 @@ type_struct* eval(tree* tree) {
     case DIV:
       return new_type_struct(INT, left->value.i / right->value.i);
     case DEF:
-      put(env.map, left->value.str, right);
+      put(scp->map, left->value.str, right);
       return right;
     case IF:
       if (truthy(*left)) {
