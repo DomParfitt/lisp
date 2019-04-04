@@ -9,4 +9,4 @@ typedef struct parse_result {
   char* error;
 } parse_result;
 
-parse_result parse(token_array tokens);
+parse_result* parse(token_array tokens);

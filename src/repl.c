@@ -14,7 +14,7 @@ const size_t INPUT_SIZE = 256;
 
 int repl() {
   token_array array;
-  parse_result parse_res;
+  parse_result* parse_res;
   char* input = malloc(sizeof(char) * INPUT_SIZE);
   init();
   while (true) {
@@ -28,28 +28,27 @@ int repl() {
 
     printf("%s", PROMPT);
     array = lex(input);
-    // for (size_t i = 0; i < array.size; i++) {
-    //   print_token(array.tokens[i]);
-    // }
     parse_res = parse(array);
-    if (parse_res.success) {
-      type_struct* result = eval(parse_res.trees[0]);
+    if (parse_res->success) {
+      type_struct* result = eval(parse_res->trees[0]);
       print_type_struct(result);
+      free(result);
     } else {
-      printf("%s\n", parse_res.error);
+      printf("%s\n", parse_res->error);
     }
-    // break;
+
+    break;
   }
-  close();
 
   free(input);
   delete_token_array(array);
-  for (size_t i = 0; i < parse_res.size; i++) {
-    tree* t = parse_res.trees[i];
-    print_tree(t);
+  for (size_t i = 0; i < parse_res->size; i++) {
+    tree* t = parse_res->trees[i];
+    // print_tree(t);
     if (t != NULL) {
       delete_tree(t);
     }
   }
+  free(parse_res);
   return 0;
 }

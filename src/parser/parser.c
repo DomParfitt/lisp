@@ -25,7 +25,7 @@ bool expect(token_array* tokens, token_kind kind);
 int tp = 0;
 char err[256];
 
-parse_result parse(token_array tokens) {
+parse_result* parse(token_array tokens) {
   tp = 0;
 
   tree* trees[10];
@@ -43,7 +43,12 @@ parse_result parse(token_array tokens) {
     t = peek(&tokens);
   }
 
-  return (parse_result){success, trees, count, err};
+  parse_result* pr = malloc(sizeof(parse_result));
+  pr->success = success;
+  pr->trees = trees;
+  pr->size = count;
+  pr->error = err;
+  return pr;
 }
 
 tree* exprs(token_array* tokens) {
