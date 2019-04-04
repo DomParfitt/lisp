@@ -67,6 +67,10 @@ type_struct* eval(tree* tree) {
       return new_type_struct(INT, left->value.i * right->value.i);
     case DIV:
       return new_type_struct(INT, left->value.i / right->value.i);
+    case GT:
+      return new_type_struct(BOOL, left->value.i > right->value.i);
+    case LT:
+      return new_type_struct(BOOL, left->value.i < right->value.i);
     case DEF:
       put(scp->map, left->value.str, right);
       return right;

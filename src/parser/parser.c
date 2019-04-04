@@ -165,20 +165,28 @@ tree* if_expr(token_array* tokens) {
 
 tree* op(token_array* tokens) {
   token token = peek(tokens);
-  if (token.kind == PLUS || token.kind == MINUS || token.kind == MULT ||
-      token.kind == DIV) {
-    return create_tree(current(tokens));
-  } else {
-    return NULL;
+  switch (token.kind) {
+    case PLUS:
+    case MINUS:
+    case MULT:
+    case DIV:
+    case GT:
+    case LT:
+      return create_tree(current(tokens));
+    default:
+      return NULL;
   }
 }
 
 tree* value(token_array* tokens) {
   token token = peek(tokens);
-  if (token.kind == NUM || token.kind == STRING) {
-    return create_tree(current(tokens));
+  switch (token.kind) {
+    case NUM:
+    case STRING:
+      return create_tree(current(tokens));
+    default:
+      return NULL;
   }
-  return NULL;
 }
 
 tree* identifer(token_array* tokens) {

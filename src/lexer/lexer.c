@@ -65,6 +65,12 @@ token_array lex(char* str) {
       case '/':
         kind = DIV;
         break;
+      case '>':
+        kind = GT;
+        break;
+      case '<':
+        kind = LT;
+        break;
       default:
         continue;
     }
