@@ -58,7 +58,67 @@ type_struct* eval(tree* tree) {
     third = eval(tree->third);
   }
 
+  type_struct* t;
   switch (tree->t.kind) {
+    case PLUS:
+      t = new_type_struct(INT, left->value.i + right->value.i);
+      break;
+    case MINUS:
+      t = new_type_struct(INT, left->value.i - right->value.i);
+      break;
+    case MULT:
+      t = new_type_struct(INT, left->value.i * right->value.i);
+      break;
+    case DIV:
+      t = new_type_struct(INT, left->value.i / right->value.i);
+      break;
+    case EQ:
+      t = new_type_struct(BOOL, left->value.i == right->value.i);
+      break;
+    case GT:
+      t = new_type_struct(BOOL, left->value.i > right->value.i);
+      break;
+    case LT:
+      t = new_type_struct(BOOL, left->value.i < right->value.i);
+      break;
+    case GTE:
+      t = new_type_struct(BOOL, left->value.i >= right->value.i);
+      break;
+    case LTE:
+      t = new_type_struct(BOOL, left->value.i <= right->value.i);
+      break;
+    case DEF:
+      put(scp->map, left->value.str, right);
+      free(left);
+      free(third);
+      return right;
+    case IF:
+      if (truthy(*left)) {
+        free(left);
+        free(third);
+        return right;
+      } else {
+        free(left);
+        free(right);
+        return third;
+      }
+    default:
+      t = new_type_struct(ERR, -1);
+  }
+
+  free(left);
+  free(right);
+  free(third);
+  return t;
+}
+
+type_struct* num_bin_op(token_kind kind, type_struct* left,
+                        type_struct* right) {
+  if (left->type != INT || right->type != INT) {
+    return new_type_struct(ERR, -1);
+  }
+
+  switch (kind) {
     case PLUS:
       return new_type_struct(INT, left->value.i + right->value.i);
     case MINUS:
@@ -67,25 +127,6 @@ type_struct* eval(tree* tree) {
       return new_type_struct(INT, left->value.i * right->value.i);
     case DIV:
       return new_type_struct(INT, left->value.i / right->value.i);
-    case EQ:
-      return new_type_struct(BOOL, left->value.i == right->value.i);
-    case GT:
-      return new_type_struct(BOOL, left->value.i > right->value.i);
-    case LT:
-      return new_type_struct(BOOL, left->value.i < right->value.i);
-    case GTE:
-      return new_type_struct(BOOL, left->value.i >= right->value.i);
-    case LTE:
-      return new_type_struct(BOOL, left->value.i <= right->value.i);
-    case DEF:
-      put(scp->map, left->value.str, right);
-      return right;
-    case IF:
-      if (truthy(*left)) {
-        return right;
-      } else {
-        return third;
-      }
     default:
       return new_type_struct(ERR, -1);
   }
